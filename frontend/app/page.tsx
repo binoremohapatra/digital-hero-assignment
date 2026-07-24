@@ -38,6 +38,12 @@ export default function LandingPage() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      if (!apiUrl) {
+        setStatus('error');
+        setErrorMessage('Vercel Config Error: NEXT_PUBLIC_API_URL is missing. Please add it to Vercel and REDEPLOY.');
+        return;
+      }
+      
       const res = await fetch(`${apiUrl}/api/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
