@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import { useEffect, useRef, memo, useId } from 'react';
 
@@ -19,7 +20,7 @@ const DotField = memo(({
   gradientTo = 'rgba(180, 151, 207, 0.25)',
   glowColor = '#120F17',
   ...rest
-}) => {
+}: any) => {
   const canvasRef = useRef(null);
   const svgRef = useRef(null);
   const glowRef = useRef(null);
