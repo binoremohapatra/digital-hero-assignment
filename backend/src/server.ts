@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: process.env.FRONTEND_URL || 'https://digital-hero-assignment-pen9h871t-binore-mohapatras-projects.vercel.app',
   credentials: true,
 }));
 

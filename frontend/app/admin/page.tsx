@@ -47,7 +47,7 @@ export default function AdminDashboard() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeLead]);
-  
+
   // Pagination
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -69,7 +69,7 @@ export default function AdminDashboard() {
   const fetchLeads = useCallback(async () => {
     setLoading(true);
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://digital-hero-assignment.onrender.com';
       const params = new URLSearchParams({
         search: debouncedSearch,
         status: statusFilter,
@@ -99,7 +99,7 @@ export default function AdminDashboard() {
   const handleStatusChange = async (id: string, newStatus: string) => {
     // Save original in case we need to rollback
     const originalLeads = [...leads];
-    
+
     // Optimistic update
     setLeads((prev: Lead[]) =>
       prev.map((lead: Lead) => (lead.id === id ? { ...lead, status: newStatus as Lead['status'] } : lead))
@@ -109,16 +109,16 @@ export default function AdminDashboard() {
     }
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://digital-hero-assignment.onrender.com';
       const res = await fetch(`${apiUrl}/api/leads/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
         credentials: 'include',
       });
-      
+
       if (!res.ok) throw new Error('Status update failed');
-      
+
       setErrorMsg(''); // Clear error on success
     } catch (error) {
       console.error('Failed to update status:', error);
@@ -188,7 +188,7 @@ export default function AdminDashboard() {
                 >
                   <X className="w-4 h-4" />
                 </motion.button>
-                
+
                 <div className="p-6 md:p-8 flex flex-col gap-6 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                   <div className="flex justify-between items-start pr-8">
                     <div>
@@ -206,7 +206,7 @@ export default function AdminDashboard() {
                       </motion.p>
                     </div>
                   </div>
-                  
+
                   <motion.div layoutId={`status-${activeLead.id}-${activeId}`}>
                     <select
                       value={activeLead.status}
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
                       <option value="CLOSED" className="bg-zinc-900 text-white">CLOSED</option>
                     </select>
                   </motion.div>
-                  
+
                   <div className="pt-4 border-t border-zinc-800 flex flex-col gap-4 text-sm text-zinc-300">
                     <div>
                       <strong className="block text-zinc-500 mb-1">Budget Range</strong>
@@ -280,7 +280,7 @@ export default function AdminDashboard() {
                   </span>
                 </div>
               </button>
-              
+
               {filterOpen && (
                 <div className="absolute right-0 mt-2 w-full md:w-48 bg-zinc-900 border border-zinc-800 rounded-lg shadow-2xl z-50 overflow-hidden py-1">
                   {['ALL', 'NEW', 'CONTACTED', 'CLOSED'].map((status) => (
@@ -300,7 +300,7 @@ export default function AdminDashboard() {
               )}
             </div>
           </div>
-          
+
           <div className="p-4 relative">
 
             <ul className="flex flex-col gap-2 w-full">
@@ -335,11 +335,11 @@ export default function AdminDashboard() {
                         {lead.email}
                       </motion.p>
                     </div>
-                    
+
                     <div className="flex flex-row items-center gap-6 sm:ml-auto w-full sm:w-auto justify-between sm:justify-end">
                       <span className="text-sm font-medium text-zinc-300 hidden sm:block">{lead.budgetRange}</span>
                       <span className="text-sm text-zinc-500 hidden sm:block">{new Date(lead.createdAt).toLocaleDateString()}</span>
-                      
+
                       <motion.div layoutId={`status-${lead.id}-${activeId}`}>
                         <span
                           className={`
@@ -368,7 +368,7 @@ export default function AdminDashboard() {
               <span className="font-medium text-zinc-100">{Math.min(page * 10, totalCount)}</span> of{' '}
               <span className="font-medium text-zinc-100">{totalCount}</span> results
             </div>
-            
+
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -377,11 +377,11 @@ export default function AdminDashboard() {
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              
+
               <div className="px-4 py-2 font-medium">
                 Page {page} of {totalPages}
               </div>
-              
+
               <button
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page === totalPages}

@@ -35,17 +35,17 @@ export default function LandingPage() {
   const onSubmit = async (data: LeadFormData) => {
     setStatus('submitting');
     setErrorMessage('');
-    
+
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://digital-hero-assignment.onrender.com';
       const res = await fetch(`${apiUrl}/api/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      
+
       const result = await res.json();
-      
+
       if (res.ok) {
         setStatus('success');
         reset();
@@ -85,12 +85,12 @@ export default function LandingPage() {
         <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-emerald-600/20 rounded-full blur-[128px] pointer-events-none animate-pulse" style={{ animationDelay: '2s' }}></div>
 
         <div className="max-w-6xl w-full mx-auto grid md:grid-cols-2 gap-16 items-center z-10">
-          
+
           <div className="space-y-8">
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1]">
               Capture leads <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-emerald-400 animate-gradient-x">
-                <TextType 
+                <TextType
                   text={["like a pro.", "instantly.", "at scale.", "effortlessly."]}
                   typingSpeed={75}
                   pauseDuration={1500}
@@ -111,12 +111,12 @@ export default function LandingPage() {
           <div className="relative group perspective-1000">
             {/* Hover Glow Effect */}
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-500 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-            
+
             <div className="relative bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 rounded-2xl p-8 shadow-2xl transform transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]">
               <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-              
+
               <h2 className="text-3xl font-bold text-white mb-8 tracking-tight">Let's talk growth.</h2>
-              
+
               {status === 'success' && (
                 <div className="mb-8 p-5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-start text-emerald-400 animate-in fade-in slide-in-from-top-4 duration-500">
                   <CheckCircle2 className="w-6 h-6 mr-3 mt-0.5 flex-shrink-0" />
