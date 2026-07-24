@@ -84,6 +84,8 @@ export default function AdminDashboard() {
         setTotalPages(data.pagination.totalPages);
         setTotalCount(data.pagination.total);
         setNewLeadsToday(data.stats.newLeadsToday);
+      } else if (res.status === 401) {
+        window.location.href = '/admin/login';
       }
     } catch (error) {
       console.error('Failed to fetch leads:', error);
