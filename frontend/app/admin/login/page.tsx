@@ -19,12 +19,6 @@ export default function AdminLogin() {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (!apiUrl) {
-        setStatus('error');
-        setErrorMessage('Vercel Config Error: NEXT_PUBLIC_API_URL is missing. Please add it to Vercel Environment Variables and REDEPLOY.');
-        return;
-      }
-      
       const res = await fetch(`${apiUrl}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

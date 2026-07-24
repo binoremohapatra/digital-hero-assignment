@@ -70,11 +70,6 @@ export default function AdminDashboard() {
     setLoading(true);
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (!apiUrl) {
-        setErrorMsg('Vercel Config Error: NEXT_PUBLIC_API_URL is missing. Please add it to Vercel and REDEPLOY.');
-        setLoading(false);
-        return;
-      }
       const params = new URLSearchParams({
         search: debouncedSearch,
         status: statusFilter,
