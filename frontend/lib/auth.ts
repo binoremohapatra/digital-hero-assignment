@@ -2,7 +2,7 @@ import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { NextRequest } from 'next/server';
 
-const secretKey = process.env.JWT_SECRET;
+const secretKey = process.env.JWT_SECRET || 'super-secret-random-jwt-key-2024';
 const key = new TextEncoder().encode(secretKey);
 
 export async function signToken(payload: Record<string, unknown>) {
