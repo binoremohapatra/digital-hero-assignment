@@ -12,14 +12,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: function (origin, callback) {
-    const allowedOrigin = process.env.FRONTEND_URL;
-    if (!origin || origin === allowedOrigin || origin.includes('vercel.app') || origin.includes('localhost')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 }));
 
