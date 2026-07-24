@@ -37,7 +37,7 @@ export default function LandingPage() {
     setErrorMessage('');
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://digital-hero-assignment.onrender.com';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       const res = await fetch(`${apiUrl}/api/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
